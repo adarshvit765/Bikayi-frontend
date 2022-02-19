@@ -1,0 +1,93 @@
+<!--Show case the pize winners in a list. 
+prize - who has won that prize
+dropdown to filter prizes by category and year.
+year 1900-2018
+Make a section to display the name of the people who won the nobel prize more than 1 time.
+-->
+<html lang='en'>
+<head>
+   <meta charset='UTF-8'>
+   <title>Nobel Prize Winners | 1900-2018</title>
+   <script src= "http://api.nobelprize.org/v1/prize.json"></script>
+   
+   <style>
+      table{
+	     margin: 0 auto;
+		 font-size:large;
+		 border: 1px solid black;
+		 }
+		 
+	  h1{
+	      text-align:center;
+		  color: #006600;
+		  font-size: xx-large;
+		  font-family: 'Gill Sans','Gill Sans MT','Calibri','Trebuchet MS','sans-serif';
+		  }
+	   td{
+	       background-color: #E4F5D4;
+		   border: 1px solid black;
+		   }
+		   
+	    th, td{
+		    font-weight:bold;
+			border:1px solid black;
+			padding: 10px;
+			text-align:center;
+			}
+			
+		td{
+		   font-weight:lighter;
+		   }
+   </style>
+
+</head>
+
+<body>
+       <h1> Nobel prize winners at the period of 1900-2018</h1>
+	   
+	   <p>filter by : <select name = 'category'>
+	   <option value=" ">Select the catogory</option>
+	   <option value="Medicine">Medicine</option>
+	   <option value="Physics">Physics</option>
+	   <option value="Chemistry">Chemistry</option>
+	   <option value="Literature">Literature</option>
+	   <option value="Peace">Peace</option>
+	   </select>
+	   <input type = 'submit' name='submit' value='filter'/>
+	   <table id='table'>
+	     <tr>
+		    <th>Year</th>
+			<th>Category</th>
+			<th>name</th>
+		 </tr>
+		 
+		 <script>
+		 if($(document).isset('submit'))
+		 {
+		 var val = document.getElementbyName('category');
+		   $(document).ready(function() {
+		      //Fetch data from JSON
+			  $.getJSON("prize.json",function(data){
+			     var prize = '';
+				 
+				 //Interation
+				 $.each(data,function(key,value){
+				 if(val !=' ' and val == value.prize.category)
+				 {
+				 prize +='<tr>;
+				 prize +='<td>' +value.prize.year+'</td>';
+				 prize +='<td>' +value.prize.category+'</td>';
+				 prize +='<td>' +value.prize.laureates.firstname+'</td>';
+				 prize += '</tr>';
+				 }});
+				 
+				 //Inserting rows in table
+				 $('#table').append(prize);
+				 });
+				 });
+				 }
+		 </script>
+	   </table>
+</body>
+
+</html>
